@@ -1,8 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import nodeConection
 import MyDesigns
+import nodeConection
+
 MyFrame
 {
     id:root_

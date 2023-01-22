@@ -15,6 +15,7 @@ qt6_add_qml_module(nodeConection
     QML_FILES
     qml/Node_Connections.qml
     qml/window.qml
+    OUTPUT_TARGETS out_targets_var
     NO_IMPORT_SCAN
     OUTPUT_DIRECTORY
     ${CMAKE_CURRENT_BINARY_DIR}/nodeConection
@@ -52,11 +53,8 @@ target_link_libraries(nodeConection PUBLIC MyDesigns qclient qclientMQTT)
 target_compile_definitions(nodeConection
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-install(TARGETS nodeConection EXPORT nodeConectionTargets DESTINATION bin )
+install(TARGETS nodeConection ${out_targets_var} EXPORT nodeConectionTargets DESTINATION bin )
 install(DIRECTORY include/ DESTINATION include/)
-if(EMSCRIPTEN)
-install(TARGETS nodeConection_qmlcache nodeConection_resources_2 nodeConection_resources_1  EXPORT nodeConectionTargets DESTINATION bin )
-endif()
 
 install(EXPORT nodeConectionTargets
     FILE nodeConectionTargets.cmake

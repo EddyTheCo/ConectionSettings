@@ -29,6 +29,7 @@ public:
 signals:
     void node_addrChanged(QUrl addr);
     void jwtChanged(QString jwt );
+    void connected(void);
 
 private:
     void set_node_addr_wss(const QUrl wss);

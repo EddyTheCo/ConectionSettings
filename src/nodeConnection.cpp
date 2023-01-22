@@ -8,6 +8,7 @@ Node_Conection::Node_Conection():rest_client(new Client()),mqtt_client(new Clien
     connect(rest_client,&qiota::Client::ready,this,[=]()
     {
         set_node_addr_wss(rest_client->get_node_address());
+        emit connected();
     });
 
 

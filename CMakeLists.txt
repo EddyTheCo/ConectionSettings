@@ -17,6 +17,9 @@ qt6_add_qml_module(nodeConection
     qml/window.qml
     OUTPUT_TARGETS out_targets_var
     NO_IMPORT_SCAN
+    IMPORTS MyDesigns
+    IMPORT_PATH
+    ${CMAKE_BINARY_DIR}/_deps/mydesigns-build
     OUTPUT_DIRECTORY
     ${CMAKE_CURRENT_BINARY_DIR}/nodeConection
 )

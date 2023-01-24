@@ -16,6 +16,8 @@ qt6_add_qml_module(nodeConection
     qml/Node_Connections.qml
     qml/window.qml
     OUTPUT_TARGETS out_targets_var
+    RESOURCE_PREFIX
+    /qt/qml
     NO_IMPORT_SCAN
     IMPORTS MyDesigns
     IMPORT_PATH
@@ -84,3 +86,6 @@ install(FILES
 export(EXPORT nodeConectionTargets
     FILE "${CMAKE_CURRENT_BINARY_DIR}/nodeConectionTargets.cmake"
 )
+list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/qml ${CMAKE_CURRENT_BINARY_DIR}/)
+set(QML_IMPORT_PATH ${QML_IMPORT_PATH} PARENT_SCOPE CACHE STRING "" FORCE)
+message(STATUS "nodeconnectionQML_IMPORT_PATH:${QML_IMPORT_PATH}")

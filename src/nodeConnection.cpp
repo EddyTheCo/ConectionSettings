@@ -5,11 +5,14 @@ using namespace qiota;
 
 Node_Conection::Node_Conection():rest_client(new Client()),mqtt_client(new ClientMqtt()),isconnected_(false)
 {
-    connect(rest_client,&qiota::Client::ready,this,[=]()
+    connect(rest_client,&qiota::Client::stateChanged,this,[=]()
     {
-        set_node_addr_wss(rest_client->get_node_address());
-        isconnected_=true;
-        emit connected();
+        if(rest_client->state()==Client::ClientState::Connected)
+        {
+            set_node_addr_wss(rest_client->get_node_address());
+            isconnected_=true;
+            emit connected();
+        }
     });
 
 

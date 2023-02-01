@@ -40,7 +40,7 @@ MyFrame
         MyTextField
         {
             id:jwt_
-            placeholderText:qsTr("JSON web token (optional)")
+            placeholderText:qsTr("JSON web token (mandatory)")
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.maximumHeight: 75

@@ -21,21 +21,18 @@ MyFrame
     ColumnLayout
     {
         anchors.fill: parent
-        spacing: 20
+        spacing: 5
         MyTextField
         {
             id:node_addr_
             placeholderText:qsTr("Node address")
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.maximumHeight: 75
-            Layout.minimumHeight: 45
-            Layout.preferredHeight: 50
-            Layout.minimumWidth: 20
-            Layout.maximumWidth: 200
+            Layout.alignment: Qt.AlignHCenter
+            Layout.minimumWidth: 150
             focus: true
             tfield.onTextEdited: butt_.enabled=true;
-            Layout.alignment: Qt.AlignLeft
+
         }
         MyTextField
         {
@@ -43,12 +40,8 @@ MyFrame
             placeholderText:qsTr("JSON web token (mandatory)")
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.maximumHeight: 75
-            Layout.minimumHeight: 45
-            Layout.minimumWidth:100
-            Layout.preferredHeight: 50
-            Layout.maximumWidth: 200
-            Layout.alignment: Qt.AlignLeft
+            Layout.minimumWidth: 150
+            Layout.alignment: Qt.AlignHCenter
         }
         MyButton
         {
@@ -57,11 +50,11 @@ MyFrame
             enabled: false
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.maximumHeight: 75
-            Layout.maximumWidth: 150
-            Layout.minimumHeight: 45
+            Layout.maximumHeight: 50
+            Layout.maximumWidth: 75
+            Layout.minimumHeight: 25
             Layout.minimumWidth:50
-            Layout.preferredHeight: 50
+            Layout.preferredHeight: 40
             Layout.alignment: Qt.AlignHCenter
             onClicked:
             {

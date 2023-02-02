@@ -37,13 +37,13 @@ include(FetchContent)
 FetchContent_Declare(
     qclient
     GIT_REPOSITORY git@github.com:EddyTheCo/Qclient-IOTA.git
-    GIT_TAG develop
+    GIT_TAG main 
 )
 FetchContent_MakeAvailable(qclient)
 FetchContent_Declare(
     qclientMQTT
     GIT_REPOSITORY git@github.com:EddyTheCo/QclientMqtt-IOTA.git
-    GIT_TAG develop
+    GIT_TAG main 
 )
 FetchContent_MakeAvailable(qclientMQTT)
 FetchContent_Declare(

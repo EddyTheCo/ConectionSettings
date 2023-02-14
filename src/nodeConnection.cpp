@@ -17,7 +17,13 @@ Node_Conection::Node_Conection():rest_client(new Client()),mqtt_client(new Clien
 
 
 }
-
+void Node_Conection::publish(const qiota::qblocks::Block & block_)
+{
+    if(isconnected_)
+    {
+        rest_client->send_block(block_);
+    }
+}
 void Node_Conection::set_node_addr_wss(const QUrl wss)
 {
     auto node_addr_wss_=wss;

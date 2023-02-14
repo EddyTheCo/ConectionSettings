@@ -28,6 +28,7 @@ public:
     qiota::Client* rest_client;
     qiota::ClientMqtt * mqtt_client;
     bool isConnected(void)const{return isconnected_;}
+    void publish(const qiota::qblocks::Block & block_);
 signals:
     void node_addrChanged(QUrl addr);
     void jwtChanged(QString jwt );

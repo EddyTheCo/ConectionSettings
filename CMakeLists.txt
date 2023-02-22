@@ -17,7 +17,7 @@ qt6_add_qml_module(nodeConection
     qml/window.qml
     OUTPUT_TARGETS out_targets_var
     RESOURCE_PREFIX
-     "/esthertech.com/imports"
+     "/esterVtech.com/imports"
     NO_IMPORT_SCAN
     IMPORTS MyDesigns
     IMPORT_PATH

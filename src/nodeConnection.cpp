@@ -3,27 +3,29 @@
 
 using namespace qiota;
 
-Node_Conection::Node_Conection():rest_client(new Client()),mqtt_client(new ClientMqtt()),isconnected_(false)
+qiota::Client* Node_Conection::rest_client=nullptr;
+
+qiota::ClientMqtt * Node_Conection::mqtt_client=nullptr;
+
+Node_Conection::ConState Node_Conection::state_=Node_Conection::Disconnected;
+
+Node_Conection::Node_Conection()
 {
+    rest_client=new Client(this);
+    mqtt_client=new ClientMqtt(this);
+
     connect(rest_client,&qiota::Client::stateChanged,this,[=]()
     {
         if(rest_client->state()==Client::ClientState::Connected)
         {
             set_node_addr_wss(rest_client->get_node_address());
-            isconnected_=true;
-            emit connected();
+            state_=Connected;
+            emit stateChanged(state_);
         }
     });
 
+}
 
-}
-void Node_Conection::publish(const qiota::qblocks::Block & block_)
-{
-    if(isconnected_)
-    {
-        rest_client->send_block(block_);
-    }
-}
 void Node_Conection::set_node_addr_wss(const QUrl wss)
 {
     auto node_addr_wss_=wss;

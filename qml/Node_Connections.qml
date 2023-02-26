@@ -8,15 +8,7 @@ import nodeConection
 MyFrame
 {
     id:root_
-    signal connected()
 
-    Connections {
-        target: Node_Conection
-
-        function onConnected() {
-             root_.connected()
-        }
-    }
     description: qsTr("Conection settings")
     ColumnLayout
     {

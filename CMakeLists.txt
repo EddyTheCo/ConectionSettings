@@ -14,7 +14,6 @@ qt6_add_qml_module(nodeConection
     src/nodeConnection.cpp include/nodeConnection.hpp
     QML_FILES
     qml/Node_Connections.qml
-    qml/window.qml
     OUTPUT_TARGETS out_targets_var
     RESOURCE_PREFIX
      "/esterVtech.com/imports"

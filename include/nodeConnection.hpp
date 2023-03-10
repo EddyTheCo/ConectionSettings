@@ -15,18 +15,18 @@ class Node_Conection: public QObject
     Q_PROPERTY(QUrl  nodeaddr READ nodeaddr WRITE set_naddr NOTIFY naddrChanged)
     Q_PROPERTY(QString  jwt READ jwt WRITE setjwt NOTIFY jwtChanged)
     Q_PROPERTY(ConState  state READ state NOTIFY stateChanged)
-    Q_PROPERTY(QString  hrp READ hrp NOTIFY hrpChanged)
     QML_ELEMENT
     QML_SINGLETON
 
 public:
 
-    Node_Conection();
+    Node_Conection(QObject *parent = nullptr);
     enum ConState {
         Disconnected = 0,
         Connected
     };
     Q_ENUM(ConState)
+    Q_INVOKABLE QJsonObject info(){return rest_client->info();}
     QUrl nodeaddr()const{return rest_client->get_node_address();}
     static QString jwt(){return rest_client->get_jwt();}
     void set_naddr(QUrl naddr){rest_client->set_node_address(naddr);}
@@ -34,20 +34,15 @@ public:
     static qiota::Client* rest_client;
     static qiota::ClientMqtt * mqtt_client;
     static ConState state(void){return state_;}
-    static QString hrp(){return hrp_;}
-    static Node_Conection * ptr(void){return ptr_;}
+
 
 signals:
     void naddrChanged();
     void jwtChanged();
     void stateChanged(Node_Conection::ConState);
-    void hrpChanged();
 
 private:
     void set_node_addr_wss(const QUrl wss);
     static ConState state_;
     static QString hrp_;
-    static Node_Conection *ptr_;
-
-
 };

@@ -18,9 +18,16 @@ Node_Conection::Node_Conection(QObject *parent):QObject(parent)
     {
         if(rest_client->state()==Client::ClientState::Connected)
         {
+            connect(mqtt_client,&QMqttClient::stateChanged,this,[=](QMqttClient::ClientState state )
+            {
+                if(state==QMqttClient::Connected)
+                {
+                    state_=Connected;
+                    emit stateChanged(state_);
+                }
+            });
             set_node_addr_wss(rest_client->get_node_address());
-            state_=Connected;
-            emit stateChanged(state_);
+
         }
     });
 

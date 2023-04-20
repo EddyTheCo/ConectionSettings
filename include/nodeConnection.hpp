@@ -40,6 +40,7 @@ signals:
     void naddrChanged();
     void jwtChanged();
     void stateChanged(Node_Conection::ConState);
+    void newBlock(QString);
 
 private:
     void set_node_addr_wss(const QUrl wss);

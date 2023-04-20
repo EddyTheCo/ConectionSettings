@@ -30,7 +30,10 @@ Node_Conection::Node_Conection(QObject *parent):QObject(parent)
 
         }
     });
-
+    connect(rest_client,&qiota::Client::last_blockid,this,[=](qblocks::c_array id)
+    {
+        emit newBlock(QString(id.toHexString()));
+    });
 }
 
 void Node_Conection::set_node_addr_wss(const QUrl wss)

@@ -1,5 +1,5 @@
 #include"nodeConnection.hpp"
-
+#include <QCryptographicHash>
 
 using namespace qiota;
 
@@ -32,7 +32,7 @@ Node_Conection::Node_Conection(QObject *parent):QObject(parent)
     });
     connect(rest_client,&qiota::Client::last_blockid,this,[=](qblocks::c_array id)
     {
-        emit newBlock(QString(id.toHexString()));
+        emit newBlock(id.toHexString());
     });
 }
 
@@ -44,3 +44,5 @@ void Node_Conection::set_node_addr_wss(const QUrl wss)
     node_addr_wss_.setPath("/api/mqtt/v1");
     mqtt_client->set_node_address(node_addr_wss_);
 }
+
+

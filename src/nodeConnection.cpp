@@ -22,12 +22,15 @@ Node_Conection::Node_Conection(QObject *parent):QObject(parent)
             {
                 if(state==QMqttClient::Connected)
                 {
-                    state_=Connected;
-                    emit stateChanged(state_);
+                    emit naddrChanged();
+                    set_state(Connected);
                 }
             });
             set_node_addr_wss(rest_client->get_node_address());
-
+        }
+        else
+        {
+            set_state(Disconnected);
         }
     });
     connect(rest_client,&qiota::Client::last_blockid,this,[=](qblocks::c_array id)

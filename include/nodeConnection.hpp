@@ -30,6 +30,7 @@ public:
     QUrl nodeaddr()const{return rest_client->get_node_address();}
     static QString jwt(){return rest_client->get_jwt();}
     void set_naddr(QUrl naddr){rest_client->set_node_address(naddr);}
+    void set_state(ConState state_m){if(state_!=state_m){state_=state_m;emit stateChanged(state_);}}
     void setjwt(QString jwt_){rest_client->set_jwt(jwt_);}
     static qiota::Client* rest_client;
     static qiota::ClientMqtt * mqtt_client;

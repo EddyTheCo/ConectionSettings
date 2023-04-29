@@ -6,55 +6,42 @@ import nodeConection
 
 MyFrame
 {
-    id:root_
-
+    id:root
     description: qsTr("Conection settings")
+    collapsed:1.0
     ColumnLayout
     {
+        visible: (root.collapsed>0.7)
         anchors.fill: parent
-        spacing: 10
+
+        spacing: 5
         MyTextField
         {
             id:node_addr_
-            placeholderText:qsTr("Node address")
+            label.text: "Node address"
+            textfield.placeholderText:qsTr("https://")
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.alignment: Qt.AlignHCenter
-            Layout.maximumWidth: 300
-            Layout.maximumHeight: 50
-            Layout.minimumHeight: 35
-            focus: true
-            tfield.onTextEdited: butt_.enabled=true;
+            Layout.preferredHeight: 75
+            textfield.onEditingFinished:
+            {
+                Node_Conection.nodeaddr=node_addr_.textfield.text
+            }
+
         }
         MyTextField
         {
             id:jwt_
-            placeholderText:qsTr("JSON web token (mandatory)")
+            label.text: "JSON web token"
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.alignment: Qt.AlignHCenter
-            Layout.maximumWidth: 300
-            Layout.maximumHeight: 50
-            Layout.minimumHeight: 35
-        }
-        MyButton
-        {
-            id:butt_
-            text:qsTr("Set")
-            enabled: false
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.maximumHeight: 50
-            Layout.maximumWidth: 75
-            Layout.preferredWidth: 50
-            Layout.minimumHeight: 25
-            Layout.minimumWidth:50
-            Layout.alignment: Qt.AlignHCenter
-            onClicked:
+            Layout.preferredHeight: 75
+            textfield.onEditingFinished:
             {
-                Node_Conection.nodeaddr=node_addr_.tfield.text
-                Node_Conection.jwt=jwt_.tfield.text
+                Node_Conection.jwt=jwt_.textfield.text
             }
+
+
         }
     }
 

@@ -18,7 +18,7 @@ MyFrame
         MyTextField
         {
             id:node_addr_
-            label.text: "Node address"
+            label.text: qsTr("Node address")
             textfield.placeholderText:qsTr("https://")
             Layout.fillWidth: true
             Layout.fillHeight: true

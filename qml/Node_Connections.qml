@@ -8,7 +8,7 @@ MyFrame
 {
     id:root
     description: qsTr("Conection settings")
-    collapsed:1.0
+
     ColumnLayout
     {
         visible: (root.collapsed>0.7)

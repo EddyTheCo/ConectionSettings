@@ -36,7 +36,7 @@ include(FetchContent)
 FetchContent_Declare(
     qclient
     GIT_REPOSITORY git@github.com:EddyTheCo/Qclient-IOTA.git
-    GIT_TAG main 
+    GIT_TAG v0.0.1
 )
 FetchContent_MakeAvailable(qclient)
 FetchContent_Declare(

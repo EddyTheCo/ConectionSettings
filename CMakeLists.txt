@@ -50,12 +50,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(qclientMQTT)
 
 FetchContent_Declare(
-	MyDesigns
+	Designs
 	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
 	GIT_TAG v0.0.1
 	FIND_PACKAGE_ARGS 0 CONFIG
 	)
-FetchContent_MakeAvailable(MyDesigns)
+FetchContent_MakeAvailable(Designs)
 
 target_link_libraries(nodeConection PUBLIC MyDesigns qclient qclientMQTT)
 

@@ -33,8 +33,8 @@ if (Qt6_FOUND)
 		QML_FILES
 		qml/Node_Connections.qml
 		OUTPUT_TARGETS out_targets_var
-		RESOURCE_PREFIX
-		"/esterVtech.com/imports"
+                RESOURCE_PREFIX
+                "/esterVtech.com/imports"
 		OUTPUT_DIRECTORY
 		${CMAKE_CURRENT_BINARY_DIR}/nodeConection
 		)
@@ -122,3 +122,6 @@ if(BUILD_DOCS)
 	include(${build_docs})
 endif()
 
+list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/qml ${CMAKE_CURRENT_BINARY_DIR}/)
+list(REMOVE_DUPLICATES QML_IMPORT_PATH)
+set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "" FORCE)

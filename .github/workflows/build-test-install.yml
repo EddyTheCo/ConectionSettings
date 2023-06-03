@@ -23,4 +23,4 @@ jobs:
       os: ${{ matrix.os }}
       sharedLib: ${{ matrix.sharedLib }}
       useThread: ${{ matrix.useThread }}
-      qtModules: 'qtshadertools'  
+      qtModules: 'qtwebsockets qtshadertools'  

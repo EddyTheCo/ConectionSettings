@@ -3,21 +3,22 @@
 
 using namespace qiota;
 
-qiota::Client* Node_Conection::rest_client=nullptr;
+qiota::Client* Node_Conection::rest_client=new Client();
 
-qiota::ClientMqtt * Node_Conection::mqtt_client=nullptr;
+qiota::ClientMqtt * Node_Conection::mqtt_client=new ClientMqtt();
 
 Node_Conection::ConState Node_Conection::state_=Node_Conection::Disconnected;
 
 Node_Conection::Node_Conection(QObject *parent):QObject(parent)
 {
-    rest_client=new Client(this);
-    mqtt_client=new ClientMqtt(this);
-
+    rest_client->setParent(this);
+    mqtt_client->setParent(this);
+    if(!rest_client)qDebug()<<"rest_client not defined";
     connect(rest_client,&qiota::Client::stateChanged,this,[=]()
     {
         if(rest_client->state()==Client::ClientState::Connected)
         {
+if(!mqtt_client)qDebug()<<"mqtt_client not defined";
             connect(mqtt_client,&QMqttClient::stateChanged,this,[=](QMqttClient::ClientState state )
             {
                 if(state==QMqttClient::Connected)
@@ -33,6 +34,7 @@ Node_Conection::Node_Conection(QObject *parent):QObject(parent)
             set_state(Disconnected);
         }
     });
+    if(!rest_client)qDebug()<<"rest_client not defined";
     connect(rest_client,&qiota::Client::last_blockid,this,[=](qblocks::c_array id)
     {
         emit newBlock(id.toHexString());

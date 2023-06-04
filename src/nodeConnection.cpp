@@ -13,12 +13,10 @@ Node_Conection::Node_Conection(QObject *parent):QObject(parent)
 {
     rest_client->setParent(this);
     mqtt_client->setParent(this);
-    if(!rest_client)qDebug()<<"rest_client not defined";
     connect(rest_client,&qiota::Client::stateChanged,this,[=]()
     {
         if(rest_client->state()==Client::ClientState::Connected)
         {
-if(!mqtt_client)qDebug()<<"mqtt_client not defined";
             connect(mqtt_client,&QMqttClient::stateChanged,this,[=](QMqttClient::ClientState state )
             {
                 if(state==QMqttClient::Connected)
@@ -34,7 +32,6 @@ if(!mqtt_client)qDebug()<<"mqtt_client not defined";
             set_state(Disconnected);
         }
     });
-    if(!rest_client)qDebug()<<"rest_client not defined";
     connect(rest_client,&qiota::Client::last_blockid,this,[=](qblocks::c_array id)
     {
         emit newBlock(id.toHexString());

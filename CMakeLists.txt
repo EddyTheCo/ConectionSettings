@@ -49,14 +49,9 @@ FetchContent_MakeAvailable(MyDesigns)
 
 if (Qt6_FOUND)
 	qt_standard_project_setup()
-	set(MODULE_BUILD SHARED)
-	if(NOT BUILD_SHARED_LIBS)
-		set(MODULE_BUILD STATIC)
-	endif(NOT BUILD_SHARED_LIBS)
 	qt6_add_qml_module(nodeConection
 		URI  nodeConection
 		VERSION 1.0
-		${MODULE_BUILD}
 		SOURCES
 		src/nodeConnection.cpp include/nodeConnection.hpp
 		QML_FILES

@@ -7,8 +7,14 @@
 #include"client/qclient.hpp"
 #include"client/qclientMQTT.hpp"
 
+#include <QtCore/QtGlobal>
+#if defined(WINDOWS_NCONN)
+# define NCONN_EXPORT Q_DECL_EXPORT
+#else
+#define NCONN_EXPORT Q_DECL_IMPORT
+#endif
 
-class Node_Conection: public QObject
+class NCONN_EXPORT Node_Conection: public QObject
 {
     Q_OBJECT
 

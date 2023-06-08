@@ -63,6 +63,7 @@ if (Qt6_FOUND)
 		${CMAKE_CURRENT_BINARY_DIR}/nodeConection
 		)
 
+	target_compile_definitions(nodeConection PRIVATE WINDOWS_NCONN)
 	target_link_libraries(nodeConection PUBLIC Qt6::Gui Qt6::Quick)
 
 
@@ -108,9 +109,9 @@ if (Qt6_FOUND)
 	if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 		include(CTest)
 		set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-v${SEMVER}-${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_VERSION}-${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_CXX_COMPILER_ID}")
-		if(NOT BUILD_SHARED_LIBS)
-			set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-static")
-		endif(NOT BUILD_SHARED_LIBS)
+		if(USE_THREADS)
+			set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-MThread")
+		endif(USE_THREADS)
 		include(CPack)
 	endif()
 

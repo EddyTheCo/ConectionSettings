@@ -7,8 +7,13 @@
 #include"client/qclient.hpp"
 #include"client/qclientMQTT.hpp"
 
+#if defined(WINDOWS_NCONN)
+# define NCONN_EXPORT Q_DECL_EXPORT
+#else
+#define NCONN_EXPORT Q_DECL_IMPORT
+#endif
 
-class Node_Conection: public QObject
+class NCONN_EXPORT Node_Conection: public QObject
 {
     Q_OBJECT
 
@@ -33,8 +38,8 @@ public:
     void set_naddr(QUrl naddr){rest_client->set_node_address(naddr);}
     void set_state(ConState state_m){if(state_!=state_m){state_=state_m;emit stateChanged(state_);}}
     void setjwt(QString jwt_){rest_client->set_jwt(jwt_);}
-    static qiota::Client* rest_client;
-    static qiota::ClientMqtt * mqtt_client;
+    NCONN_EXPORT static qiota::Client* rest_client;
+    NCONN_EXPORT static qiota::ClientMqtt * mqtt_client;
     static ConState state(void){return state_;}
 
 
@@ -47,6 +52,6 @@ signals:
 
 private:
     void set_node_addr_wss(const QUrl wss);
-    static ConState state_;
-    static QString hrp_;
+    NCONN_EXPORT static ConState state_;
+    NCONN_EXPORT static QString hrp_;
 };

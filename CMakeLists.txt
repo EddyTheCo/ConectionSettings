@@ -63,6 +63,7 @@ if (Qt6_FOUND)
 		${CMAKE_CURRENT_BINARY_DIR}/nodeConection
 		)
 
+	target_compile_definitions(nodeConection PRIVATE WINDOWS_NCONN)
 	target_link_libraries(nodeConection PUBLIC Qt6::Gui Qt6::Quick)
 
 

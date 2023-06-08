@@ -23,6 +23,30 @@ include(GNUInstallDirs)
 find_package(Qt6 COMPONENTS Core Gui Quick)
 
 
+FetchContent_Declare(
+	qclient
+	GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
+	GIT_TAG v0.1.1
+	FIND_PACKAGE_ARGS 0 CONFIG
+	)
+FetchContent_MakeAvailable(qclient)
+
+FetchContent_Declare(
+	qclientMQTT
+	GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
+	GIT_TAG v0.0.1
+	FIND_PACKAGE_ARGS 0 CONFIG
+	)
+FetchContent_MakeAvailable(qclientMQTT)
+
+FetchContent_Declare(
+	MyDesigns
+	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
+	GIT_TAG v0.0.1
+	FIND_PACKAGE_ARGS 0 CONFIG
+	)
+FetchContent_MakeAvailable(MyDesigns)
+
 if (Qt6_FOUND)
 	qt_standard_project_setup()
 	qt6_add_qml_module(nodeConection
@@ -41,30 +65,6 @@ if (Qt6_FOUND)
 
 	target_link_libraries(nodeConection PUBLIC Qt6::Gui Qt6::Quick)
 
-
-	FetchContent_Declare(
-		qclient
-		GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
-		GIT_TAG v0.0.1
-		FIND_PACKAGE_ARGS 0 CONFIG
-		)
-	FetchContent_MakeAvailable(qclient)
-
-	FetchContent_Declare(
-		qclientMQTT
-		GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-		GIT_TAG v0.0.1
-		FIND_PACKAGE_ARGS 0 CONFIG
-		)
-	FetchContent_MakeAvailable(qclientMQTT)
-
-	FetchContent_Declare(
-		MyDesigns
-		GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-		GIT_TAG v0.0.1
-		FIND_PACKAGE_ARGS 0 CONFIG
-		)
-	FetchContent_MakeAvailable(MyDesigns)
 
 	target_link_libraries(nodeConection PUBLIC MyDesigns qclient qclientMQTT)
 
@@ -122,3 +122,6 @@ if(BUILD_DOCS)
 	include(${build_docs})
 endif()
 
+list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/qml ${CMAKE_CURRENT_BINARY_DIR}/)
+list(REMOVE_DUPLICATES QML_IMPORT_PATH)
+set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "" FORCE)

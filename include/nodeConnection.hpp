@@ -15,6 +15,7 @@ class Node_Conection: public QObject
     Q_PROPERTY(QUrl  nodeaddr READ nodeaddr WRITE set_naddr NOTIFY naddrChanged)
     Q_PROPERTY(QString  jwt READ jwt WRITE setjwt NOTIFY jwtChanged)
     Q_PROPERTY(ConState  state READ state NOTIFY stateChanged)
+
     QML_ELEMENT
     QML_SINGLETON
 
@@ -42,6 +43,7 @@ signals:
     void jwtChanged();
     void stateChanged(Node_Conection::ConState);
     void newBlock(QString);
+
 
 private:
     void set_node_addr_wss(const QUrl wss);

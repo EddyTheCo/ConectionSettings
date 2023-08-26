@@ -34,7 +34,7 @@ FetchContent_MakeAvailable(qclient)
 FetchContent_Declare(
 	qclientMQTT
 	GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-        GIT_TAG v0.2.2
+        GIT_TAG develop
 	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(qclientMQTT)

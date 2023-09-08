@@ -11,7 +11,7 @@ version_from_git(
 	LOG       OFF
 	TIMESTAMP "%Y%m%d%H%M%S"
 	)
-project(IOTAQml VERSION ${VERSION} LANGUAGES CXX)
+project(NodeConnectionQml VERSION ${VERSION} DESCRIPTION "Connection to nodes QML module" LANGUAGES CXX)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CXX_STANDARD 17)
@@ -84,13 +84,13 @@ if (Qt6_FOUND)
 
 	install(EXPORT nodeConectionTargets
 		FILE nodeConectionTargets.cmake
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConection
 		)
 	include(CMakePackageConfigHelpers)
 
 	configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
 		"${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfig.cmake"
-		INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+		INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConection
 		)
 	write_basic_package_version_file(
 		"${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfigVersion.cmake"
@@ -100,13 +100,14 @@ if (Qt6_FOUND)
 	install(FILES
 		${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfig.cmake
 		${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfigVersion.cmake
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConection
 		)
 	export(EXPORT nodeConectionTargets
 		FILE "${CMAKE_CURRENT_BINARY_DIR}/nodeConectionTargets.cmake"
 		)
 
 	if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+		set(CPACK_PACKAGE_CONTACT "estervtech")
 		include(CTest)
 		set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-v${SEMVER}-${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_VERSION}-${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_CXX_COMPILER_ID}")
 		if(USE_THREADS)

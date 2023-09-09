@@ -26,24 +26,24 @@ find_package(Qt6 COMPONENTS Core Gui Quick)
 FetchContent_Declare(
 	qclient
 	GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
-	GIT_TAG v0.2.2
-	FIND_PACKAGE_ARGS 0 CONFIG
+	GIT_TAG v0.2.3
+	FIND_PACKAGE_ARGS 0.2 CONFIG
 	)
 FetchContent_MakeAvailable(qclient)
 
 FetchContent_Declare(
 	qclientMQTT
 	GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-        GIT_TAG v0.2.2
-	FIND_PACKAGE_ARGS 0 CONFIG
+        GIT_TAG v0.2.3
+	FIND_PACKAGE_ARGS 0.2 CONFIG
 	)
 FetchContent_MakeAvailable(qclientMQTT)
 
 FetchContent_Declare(
 	MyDesigns
 	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-        GIT_TAG v0.2.2
-	FIND_PACKAGE_ARGS 0 CONFIG
+        GIT_TAG v0.2.3
+	FIND_PACKAGE_ARGS 0.2 CONFIG
 	)
 FetchContent_MakeAvailable(MyDesigns)
 
@@ -61,6 +61,7 @@ if (Qt6_FOUND)
 		"/esterVtech.com/imports"
 		OUTPUT_DIRECTORY
 		${CMAKE_CURRENT_BINARY_DIR}/nodeConection
+		IMPORT_PATH ${QML_IMPORT_PATH}
 		)
 
 	target_compile_definitions(nodeConection PRIVATE WINDOWS_NCONN)

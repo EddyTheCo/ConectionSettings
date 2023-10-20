@@ -80,7 +80,7 @@ if (Qt6_FOUND)
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/nodeConection
 		)
 
-	install(TARGETS nodeConection ${out_targets_var}
+	install(TARGETS nodeConection nodeConectionplugin ${out_targets_var}
 		EXPORT nodeConectionTargets
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		)

@@ -21,8 +21,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 include(GNUInstallDirs)
 
-find_package(Qt6 COMPONENTS Core Gui Quick)
-
 
 FetchContent_Declare(
 	qclient
@@ -40,21 +38,27 @@ FetchContent_Declare(
 	)
 FetchContent_MakeAvailable(qclientMQTT)
 
-FetchContent_Declare(
-	MyDesigns
-	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-        GIT_TAG v0.3.1
-	FIND_PACKAGE_ARGS 0.3 CONFIG
-	)
-FetchContent_MakeAvailable(MyDesigns)
+option(USE_QML "Create QML types and modules" ON)
+if(USE_QML)
+    FetchContent_Declare(
+            MyDesigns
+            GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
+            GIT_TAG v0.4.1
+            FIND_PACKAGE_ARGS 0.4 CONFIG
+            )
+    FetchContent_MakeAvailable(MyDesigns)
+    find_package(Qt6 COMPONENTS Core Gui Quick)
+else()
+    find_package(Qt6 COMPONENTS Core)
+endif()
 
 if (Qt6_FOUND)
 	qt_standard_project_setup()
+        add_library(nodeConection src/nodeConnection.cpp include/nodeConnection.hpp)
+        if(USE_QML)
 	qt6_add_qml_module(nodeConection
 		URI  nodeConection
-		VERSION 1.0
-		SOURCES
-		src/nodeConnection.cpp include/nodeConnection.hpp
+		VERSION 1.0		
 		QML_FILES
 		qml/Node_Connections.qml
 		OUTPUT_TARGETS out_targets_var
@@ -65,22 +69,27 @@ if (Qt6_FOUND)
 		IMPORT_PATH ${CMAKE_BINARY_DIR}
 		)
 
-	target_compile_definitions(nodeConection PRIVATE WINDOWS_NCONN)
+        target_compile_definitions(nodeConection PRIVATE WINDOWS_NCONN USE_QML)
 	target_link_libraries(nodeConection PUBLIC Qt6::Gui Qt6::Quick)
-
-
-	target_link_libraries(nodeConection PUBLIC MyDesigns qclient qclientMQTT
-		$<$<STREQUAL:$<TARGET_PROPERTY:MyDesigns,TYPE>,STATIC_LIBRARY>:MyDesignsplugin>
-		)
+        target_link_libraries(nodeConection PUBLIC MyDesigns
+            $<$<STREQUAL:$<TARGET_PROPERTY:MyDesigns,TYPE>,STATIC_LIBRARY>:MyDesignsplugin>
+                )
+            install(TARGETS nodeConectionplugin ${out_targets_var}
+                    EXPORT nodeConectionTargets
+                    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                    )
+                install(DIRECTORY ${CMAKE_BINARY_DIR}/nodeConection/
+                        DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/nodeConection
+                        )
+endif(USE_QML)
+        target_link_libraries(nodeConection PUBLIC qclient qclientMQTT)
 
 	target_include_directories(nodeConection PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/nodeConection>")
 
-	install(DIRECTORY ${CMAKE_BINARY_DIR}/nodeConection/
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/nodeConection
-		)
 
-	install(TARGETS nodeConection nodeConectionplugin ${out_targets_var}
+
+        install(TARGETS nodeConection
 		EXPORT nodeConectionTargets
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		)

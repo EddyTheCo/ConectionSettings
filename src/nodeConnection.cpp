@@ -3,12 +3,15 @@
 
 using namespace qiota;
 
-
 Node_Conection * Node_Conection::m_instance=nullptr;
+Node_Conection* Node_Conection::instance()
+{
+    if (!m_instance) m_instance=new Node_Conection();
+    return m_instance;
+}
 Node_Conection::Node_Conection(QObject *parent):QObject(parent),rest_client(new Client(this)),mqtt_client(new ClientMqtt(this)),
     state_(Node_Conection::Disconnected)
 {
-    if(!m_instance)m_instance=this;
     connect(rest_client,&qiota::Client::stateChanged,this,[=]()
     {
         if(rest_client->state()==Client::ClientState::Connected)

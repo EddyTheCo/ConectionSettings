@@ -25,7 +25,7 @@ include(GNUInstallDirs)
 FetchContent_Declare(
 	qclient
 	GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
-	GIT_TAG v0.2.3
+	GIT_TAG improvements
 	FIND_PACKAGE_ARGS 0.2 CONFIG
 	)
 FetchContent_MakeAvailable(qclient)
@@ -33,7 +33,7 @@ FetchContent_MakeAvailable(qclient)
 FetchContent_Declare(
 	qclientMQTT
 	GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-        GIT_TAG v0.2.3
+        GIT_TAG improvements
 	FIND_PACKAGE_ARGS 0.2 CONFIG
 	)
 FetchContent_MakeAvailable(qclientMQTT)
@@ -74,10 +74,14 @@ if (Qt6_FOUND)
         target_link_libraries(nodeConection PUBLIC MyDesigns
             $<$<STREQUAL:$<TARGET_PROPERTY:MyDesigns,TYPE>,STATIC_LIBRARY>:MyDesignsplugin>
                 )
-            install(TARGETS nodeConectionplugin ${out_targets_var}
+            install(TARGETS ${out_targets_var}
                     EXPORT nodeConectionTargets
                     DESTINATION ${CMAKE_INSTALL_LIBDIR}
                     )
+                install(TARGETS nodeConectionplugin
+                        EXPORT nodeConectionTargets
+                        DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/nodeConection
+                        )
                 install(DIRECTORY ${CMAKE_BINARY_DIR}/nodeConection/
                         DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/nodeConection
                         )

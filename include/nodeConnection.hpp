@@ -17,6 +17,9 @@
 #define NCONN_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace qiota{
+
+
 class NCONN_EXPORT NodeConnection: public QObject
 {
     Q_OBJECT
@@ -27,37 +30,35 @@ class NCONN_EXPORT NodeConnection: public QObject
     QML_ELEMENT
     QML_SINGLETON
 #endif
-    NodeConnection(QObject *parent = nullptr);
+
+
 public:
     enum ConState {
         Disconnected = 0,
         Connected
     };
     Q_ENUM(ConState)
-    Q_INVOKABLE QJsonObject info(){return rest_client->info();}
-    QUrl nodeaddr()const{return rest_client->get_node_address();}
-    QString jwt(){return rest_client->get_jwt();}
-    void set_naddr(QUrl naddr);
-    void set_state(ConState state_m){if(state_!=state_m){state_=state_m;emit stateChanged(state_);}}
-    void setjwt(QString jwt_){rest_client->set_jwt(jwt_);}
+
+    QUrl nodeaddr()const{return m_restClient->getNodeAddress();}
+    void setNodeAddr(QUrl naddr);
+
 
     static NodeConnection* instance();
-    ConState state(void){return state_;}
-    qiota::Client* rest(){return rest_client;};
-    qiota::ClientMqtt * mqtt(){return mqtt_client;};
+    ConState state(void){return m_state;}
+    qiota::Client* rest(){return m_restClient;};
+    qiota::ClientMqtt * mqtt(){return m_mqttClient;};
 
 signals:
-    void naddrChanged();
-    void jwtChanged();
-    void stateChanged(NodeConnection::ConState);
-    void newBlock(QString);
-
+    void stateChanged();
 
 private:
+    NodeConnection(QObject *parent = nullptr);
+    void setState(const ConState& state){if(m_state!=state){m_state=state;emit stateChanged();}}
     static NodeConnection* m_instance;
-    qiota::Client* rest_client;
-    qiota::ClientMqtt * mqtt_client;
-    void set_node_addr_wss(const QUrl wss);
-    ConState state_;
-    QString hrp_;
+    Client* m_restClient;
+    ClientMqtt * m_mqttClient;
+    void setNodeAddrWss(const QUrl wss);
+    ConState m_state;
+
+};
 };

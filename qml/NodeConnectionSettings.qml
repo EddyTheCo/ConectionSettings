@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import MyDesigns
-import nodeConection
+import nodeConnection
 
 
 MyFrame
@@ -25,7 +25,7 @@ MyFrame
             Layout.preferredHeight: 75
             textfield.onEditingFinished:
             {
-                Node_Conection.nodeaddr=node_addr_.textfield.text
+                NodeConnection.setNodeAddr(node_addr_.textfield.text);
             }
 
         }
@@ -38,7 +38,7 @@ MyFrame
             Layout.preferredHeight: 75
             textfield.onEditingFinished:
             {
-                Node_Conection.jwt=jwt_.textfield.text
+                NodeConnection.setJWT(jwt_.textfield.text);
             }
 
 

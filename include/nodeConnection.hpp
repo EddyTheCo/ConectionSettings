@@ -8,7 +8,7 @@
 #include"client/qclientMQTT.hpp"
 
 #if defined(USE_QML)
-#include <QtQml/qqmlregistration.h>
+#include <QtQml>
 #endif
 #include <QtCore/QtGlobal>
 #if defined(WINDOWS_NCONN)
@@ -31,6 +31,7 @@ class NCONN_EXPORT NodeConnection: public QObject
 
 
 public:
+
     enum ConState {
         Disconnected = 0,
         Connected
@@ -48,6 +49,12 @@ public:
     };
 
     static NodeConnection* instance();
+#if defined(USE_QML)
+    static NodeConnection *create(QQmlEngine *qmlEngine, QJSEngine *jsEngine)
+    {
+         return instance();
+    }
+#endif
     ConState state(void){return m_state;}
     qiota::Client* rest(){return m_restClient;};
     qiota::ClientMqtt * mqtt(){return m_mqttClient;};

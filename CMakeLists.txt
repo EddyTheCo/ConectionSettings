@@ -60,7 +60,7 @@ if (Qt6_FOUND)
                 URI  nodeConnection
 		VERSION 1.0		
 		QML_FILES
-		qml/Node_Connections.qml
+                qml/NodeConnectionSettings.qml
 		OUTPUT_TARGETS out_targets_var
 		RESOURCE_PREFIX
 		"/esterVtech.com/imports"

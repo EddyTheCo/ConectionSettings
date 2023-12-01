@@ -6,7 +6,7 @@ Also provide some qml interface to set the nodes connection settings.
 
 ## API reference
 
-You can read the [API reference](https://eddytheco.github.io/ConectionSettings/), or generate it yourself like
+You can read the [API reference](https://eddytheco.github.io/ConnectionSettings/), or generate it yourself like
 ```
 cmake -DBUILD_DOCS=ON ../
 cmake --build . --target doxygen_docs

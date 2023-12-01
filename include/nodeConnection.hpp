@@ -24,8 +24,6 @@ class NCONN_EXPORT NodeConnection: public QObject
 {
     Q_OBJECT
 #if defined(USE_QML)
-    Q_PROPERTY(QUrl  nodeaddr READ nodeaddr WRITE set_naddr NOTIFY naddrChanged)
-    Q_PROPERTY(QString  jwt READ jwt WRITE setjwt NOTIFY jwtChanged)
     Q_PROPERTY(ConState  state READ state NOTIFY stateChanged)
     QML_ELEMENT
     QML_SINGLETON
@@ -39,9 +37,15 @@ public:
     };
     Q_ENUM(ConState)
 
-    QUrl nodeaddr()const{return m_restClient->getNodeAddress();}
-    void setNodeAddr(QUrl naddr);
-
+    Q_INVOKABLE QUrl nodeaddr()const{return m_restClient->getNodeAddress();}
+    Q_INVOKABLE void setNodeAddr(QUrl naddr)
+    {
+         m_restClient->setNodeAddress(naddr);
+    };
+    Q_INVOKABLE void setJWT(QString jwt)
+    {
+         m_restClient->JWT=jwt;
+    };
 
     static NodeConnection* instance();
     ConState state(void){return m_state;}

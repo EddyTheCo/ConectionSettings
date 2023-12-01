@@ -54,10 +54,10 @@ endif()
 
 if (Qt6_FOUND)
 	qt_standard_project_setup()
-        add_library(nodeConection src/nodeConnection.cpp include/nodeConnection.hpp)
+        add_library(nodeConnection src/nodeConnection.cpp include/nodeConnection.hpp)
         if(USE_QML)
-	qt6_add_qml_module(nodeConection
-		URI  nodeConection
+        qt6_add_qml_module(nodeConnection
+                URI  nodeConnection
 		VERSION 1.0		
 		QML_FILES
 		qml/Node_Connections.qml
@@ -65,64 +65,64 @@ if (Qt6_FOUND)
 		RESOURCE_PREFIX
 		"/esterVtech.com/imports"
 		OUTPUT_DIRECTORY
-		${CMAKE_BINARY_DIR}/nodeConection
+                ${CMAKE_BINARY_DIR}/nodeConnection
 		IMPORT_PATH ${CMAKE_BINARY_DIR}
 		)
 
-        target_compile_definitions(nodeConection PRIVATE WINDOWS_NCONN USE_QML)
-	target_link_libraries(nodeConection PUBLIC Qt6::Gui Qt6::Quick)
-        target_link_libraries(nodeConection PUBLIC MyDesigns
+        target_compile_definitions(nodeConnection PRIVATE WINDOWS_NCONN USE_QML)
+        target_link_libraries(nodeConnection PUBLIC Qt6::Gui Qt6::Quick)
+        target_link_libraries(nodeConnection PUBLIC MyDesigns
             $<$<STREQUAL:$<TARGET_PROPERTY:MyDesigns,TYPE>,STATIC_LIBRARY>:MyDesignsplugin>
                 )
             install(TARGETS ${out_targets_var}
-                    EXPORT nodeConectionTargets
+                    EXPORT nodeConnectionTargets
                     DESTINATION ${CMAKE_INSTALL_LIBDIR}
                     )
-                install(TARGETS nodeConectionplugin
-                        EXPORT nodeConectionTargets
-                        DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/nodeConection
+                install(TARGETS nodeConnectionplugin
+                        EXPORT nodeConnectionTargets
+                        DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/nodeConnection
                         )
-                install(DIRECTORY ${CMAKE_BINARY_DIR}/nodeConection/
-                        DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/nodeConection
+                install(DIRECTORY ${CMAKE_BINARY_DIR}/nodeConnection/
+                        DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/nodeConnection
                         )
 endif(USE_QML)
-        target_link_libraries(nodeConection PUBLIC qclient qclientMQTT)
+        target_link_libraries(nodeConnection PUBLIC qclient qclientMQTT)
 
-	target_include_directories(nodeConection PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/nodeConection>")
+        target_include_directories(nodeConnection PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/nodeConnection>")
 
 
 
-        install(TARGETS nodeConection
-		EXPORT nodeConectionTargets
+        install(TARGETS nodeConnection
+                EXPORT nodeConnectionTargets
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		)
 	install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
-		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nodeConection
+                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nodeConnection
 		)
 
-	install(EXPORT nodeConectionTargets
-		FILE nodeConectionTargets.cmake
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConection
+        install(EXPORT nodeConnectionTargets
+                FILE nodeConnectionTargets.cmake
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConnection
 		)
 	include(CMakePackageConfigHelpers)
 
 	configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-		"${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfig.cmake"
-		INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConection
+                "${CMAKE_CURRENT_BINARY_DIR}/nodeConnectionConfig.cmake"
+                INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConnection
 		)
 	write_basic_package_version_file(
-		"${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfigVersion.cmake"
+                "${CMAKE_CURRENT_BINARY_DIR}/nodeConnectionConfigVersion.cmake"
 		VERSION ${VERSION}
 		COMPATIBILITY SameMajorVersion
 		)
 	install(FILES
-		${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfig.cmake
-		${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfigVersion.cmake
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConection
+                ${CMAKE_CURRENT_BINARY_DIR}/nodeConnectionConfig.cmake
+                ${CMAKE_CURRENT_BINARY_DIR}/nodeConnectionConfigVersion.cmake
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConnection
 		)
-	export(EXPORT nodeConectionTargets
-		FILE "${CMAKE_CURRENT_BINARY_DIR}/nodeConectionTargets.cmake"
+        export(EXPORT nodeConnectionTargets
+                FILE "${CMAKE_CURRENT_BINARY_DIR}/nodeConnectionTargets.cmake"
 		)
 
 	if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)

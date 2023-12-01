@@ -35,16 +35,14 @@ NodeConnection::NodeConnection(QObject *parent)
     });
 
 }
-void NodeConnection::setNodeAddr(QUrl naddr){
-    m_restClient->setNodeAddress(naddr);
-}
+
 void NodeConnection::setNodeAddrWss(const QUrl wss)
 {
     auto nodeAddrWss=wss;
     nodeAddrWss.setScheme("wss");
     nodeAddrWss.setPort(443);
     nodeAddrWss.setPath("/api/mqtt/v1");
-    m_mqttClient->set_node_address(nodeAddrWss);
+    m_mqttClient->setNodeAddress(nodeAddrWss);
 }
 
 

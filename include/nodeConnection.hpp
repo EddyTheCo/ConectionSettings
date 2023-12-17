@@ -48,9 +48,9 @@ public:
          m_restClient->JWT=jwt;
     };
 
-    static NodeConnection* instance();
+    NCONN_EXPORT static NodeConnection* instance();
 #if defined(USE_QML)
-    static NodeConnection *create(QQmlEngine *qmlEngine, QJSEngine *jsEngine)
+    NCONN_EXPORT static NodeConnection *create(QQmlEngine *qmlEngine, QJSEngine *jsEngine)
     {
          return instance();
     }
@@ -65,7 +65,7 @@ signals:
 private:
     NodeConnection(QObject *parent = nullptr);
     void setState(const ConState& state){if(m_state!=state){m_state=state;emit stateChanged();}}
-    NCONN_EXPORT static NodeConnection* m_instance;
+    static NodeConnection* m_instance;
     Client* m_restClient;
     ClientMqtt * m_mqttClient;
     void setNodeAddrWss(const QUrl wss);

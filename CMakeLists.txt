@@ -71,7 +71,7 @@ if (Qt6_FOUND)
 		)
 
         add_library(${PROJECT_NAME}::nodeConnectionplugin ALIAS nodeConnectionplugin)
-        target_compile_definitions(nodeConnection PRIVATE WINDOWS_NCONN USE_QML)
+        target_compile_definitions(nodeConnection PRIVATE USE_QML)
         target_link_libraries(nodeConnection PUBLIC Qt6::Gui Qt6::Quick)
         target_link_libraries(nodeConnection PUBLIC EstervDesigns::SimpleStyle
             $<$<STREQUAL:$<TARGET_PROPERTY:EstervDesigns::SimpleStyle,TYPE>,STATIC_LIBRARY>:EstervDesigns::SimpleStyleplugin>
@@ -94,7 +94,7 @@ if (Qt6_FOUND)
 endif(USE_QML)
         target_link_libraries(nodeConnection PUBLIC IotaMqttClient::clientMQTT IotaClient::client )
         target_link_libraries(nodeConnection PUBLIC Qt6::Core)
-
+ 	target_compile_definitions(nodeConnection PRIVATE WINDOWS_NCONN)
         target_include_directories(nodeConnection PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                 "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Esterv/${PROJECT_NAME}>")
 

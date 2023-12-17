@@ -48,9 +48,9 @@ public:
          m_restClient->JWT=jwt;
     };
 
-    NCONN_EXPORT static NodeConnection* instance();
+    static NodeConnection* instance();
 #if defined(USE_QML)
-    NCONN_EXPORT static NodeConnection *create(QQmlEngine *qmlEngine, QJSEngine *jsEngine)
+    static NodeConnection *create(QQmlEngine *qmlEngine, QJSEngine *jsEngine)
     {
          return instance();
     }

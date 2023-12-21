@@ -5,7 +5,7 @@ import Esterv.Iota.NodeConnection
 import Esterv.Styles.Simple
 
 
-Item
+Frame
 {
     id:control
     Component.onCompleted: NodeConnection.setNodeAddr(node_addr.currentText);
@@ -14,25 +14,34 @@ Item
         ListElement { text: "https://multiverse.dlt.builders/" }
         ListElement { text: "https://lithuania.dlt.green/" }
     }
+
     ColumnLayout
     {
         anchors.fill: parent
-
-        Rectangle
+        RowLayout
         {
-            color:Style.backColor3
-            implicitHeight: con.implicitHeight+20
-            implicitWidth: con.implicitWidth+20
-            radius:Math.min(width,height)*0.5
-            Layout.alignment: Qt.AlignRight
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            spacing: 5
             Label
             {
-                id:con
-                anchors.centerIn:  parent
-                text:(NodeConnection.state)?qsTr("Connected"):qsTr("Waiting for node")
+                text:qsTr("Connection settings")
+                elide:Text.ElideRight
+                horizontalAlignment: TextEdit.AlignLeft
+                verticalAlignment: TextEdit.AlignVCenter
+                Layout.fillWidth: true
+            }
+            Rectangle
+            {
+                color:(NodeConnection.state)?"green":"red"
+                implicitHeight: 16
+                implicitWidth: 16
+                radius: 16
+                Layout.alignment: Qt.AlignRight
+                ToolTip.text: (NodeConnection.state)?qsTr("Connected"):qsTr("Waiting for node")
+                ToolTip.visible: hovered
             }
         }
-
         GridLayout
         {
             Layout.fillHeight: true
@@ -42,7 +51,7 @@ Item
             flow:(width<350)?GridLayout.TopToBottom:GridLayout.LeftToRight
             Label
             {
-                text: qsTr("Node URL:")
+                text: qsTr("URL:")
                 Layout.fillWidth: true
             }
             ComboBox {
@@ -63,7 +72,7 @@ Item
             }
             Label
             {
-                text: qsTr("JSON web token:")
+                text: qsTr("JWT(optional):")
                 Layout.fillWidth: true
             }
             TextField
@@ -78,8 +87,7 @@ Item
             }
         }
     }
+
+
 }
-
-
-
 

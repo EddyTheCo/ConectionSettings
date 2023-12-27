@@ -25,16 +25,16 @@ include(GNUInstallDirs)
 FetchContent_Declare(
         IotaClient
 	GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
-        GIT_TAG develop
-	FIND_PACKAGE_ARGS 0.2 CONFIG
+        GIT_TAG v0.3.1
+	FIND_PACKAGE_ARGS 0.3 CONFIG
 	)
 FetchContent_MakeAvailable(IotaClient)
 
 FetchContent_Declare(
         IotaMqttClient
 	GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-        GIT_TAG develop
-	FIND_PACKAGE_ARGS 0.2 CONFIG
+        GIT_TAG v0.3.1
+	FIND_PACKAGE_ARGS 0.3 CONFIG
 	)
 FetchContent_MakeAvailable(IotaMqttClient)
 
@@ -43,8 +43,8 @@ if(USE_QML)
     FetchContent_Declare(
             EstervDesigns
             GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-            GIT_TAG develop
-            FIND_PACKAGE_ARGS 1.0 CONFIG
+            GIT_TAG v1.1.0
+            FIND_PACKAGE_ARGS 1.1 CONFIG
         )
     FetchContent_MakeAvailable(EstervDesigns)
     find_package(Qt6 COMPONENTS Core Gui Quick)

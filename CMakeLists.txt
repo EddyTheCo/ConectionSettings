@@ -5,14 +5,14 @@ include(FetchContent)
 FetchContent_Declare(
 	ccommon
 	GIT_REPOSITORY https://github.com/EddyTheCo/Common.git
-	GIT_TAG main
+        GIT_TAG v0.1.1
 	)
 FetchContent_MakeAvailable(ccommon)
 version_from_git(
 	LOG       OFF
 	TIMESTAMP "%Y%m%d%H%M%S"
 	)
-project(NodeConnectionQml VERSION ${VERSION} DESCRIPTION "Connection to nodes QML module" LANGUAGES CXX)
+project(IotaNodeConn VERSION ${VERSION} DESCRIPTION "Methods to communicate with Iota nodes" LANGUAGES CXX)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CXX_STANDARD 17)
@@ -21,98 +21,121 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 include(GNUInstallDirs)
 
-find_package(Qt6 COMPONENTS Core Gui Quick)
-
 
 FetchContent_Declare(
-	qclient
+        IotaClient
 	GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
-	GIT_TAG v0.2.3
-	FIND_PACKAGE_ARGS 0.2 CONFIG
-	)
-FetchContent_MakeAvailable(qclient)
-
-FetchContent_Declare(
-	qclientMQTT
-	GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-        GIT_TAG v0.2.3
-	FIND_PACKAGE_ARGS 0.2 CONFIG
-	)
-FetchContent_MakeAvailable(qclientMQTT)
-
-FetchContent_Declare(
-	MyDesigns
-	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
         GIT_TAG v0.3.1
 	FIND_PACKAGE_ARGS 0.3 CONFIG
 	)
-FetchContent_MakeAvailable(MyDesigns)
+FetchContent_MakeAvailable(IotaClient)
+
+FetchContent_Declare(
+        IotaMqttClient
+	GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
+        GIT_TAG v0.3.1
+	FIND_PACKAGE_ARGS 0.3 CONFIG
+	)
+FetchContent_MakeAvailable(IotaMqttClient)
+
+option(USE_QML "Create QML types and modules" ON)
+if(USE_QML)
+    FetchContent_Declare(
+            EstervDesigns
+            GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
+            GIT_TAG v1.1.0
+            FIND_PACKAGE_ARGS 1.1 CONFIG
+        )
+    FetchContent_MakeAvailable(EstervDesigns)
+    find_package(Qt6 COMPONENTS Core Gui Quick)
+else()
+    find_package(Qt6 COMPONENTS Core)
+endif()
 
 if (Qt6_FOUND)
 	qt_standard_project_setup()
-	qt6_add_qml_module(nodeConection
-		URI  nodeConection
-		VERSION 1.0
-		SOURCES
-		src/nodeConnection.cpp include/nodeConnection.hpp
+        add_library(nodeConnection src/nodeConnection.cpp include/nodeConnection.hpp)
+        add_library(${PROJECT_NAME}::nodeConnection ALIAS nodeConnection)
+        if(USE_QML)
+        qt6_add_qml_module(nodeConnection
+                URI   Esterv.Iota.NodeConnection
+		VERSION 1.0		
 		QML_FILES
-		qml/Node_Connections.qml
+                "qml/NodeConnectionSettings.qml"
 		OUTPUT_TARGETS out_targets_var
 		RESOURCE_PREFIX
 		"/esterVtech.com/imports"
 		OUTPUT_DIRECTORY
-		${CMAKE_BINARY_DIR}/nodeConection
-		IMPORT_PATH ${CMAKE_BINARY_DIR}
+                ${CMAKE_BINARY_DIR}/Esterv/Iota/NodeConnection
+                IMPORT_PATH ${CMAKE_BINARY_DIR} ${CMAKE_INSTALL_LIBDIR}
 		)
 
-	target_compile_definitions(nodeConection PRIVATE WINDOWS_NCONN)
-	target_link_libraries(nodeConection PUBLIC Qt6::Gui Qt6::Quick)
+        add_library(${PROJECT_NAME}::nodeConnectionplugin ALIAS nodeConnectionplugin)
+        target_compile_definitions(nodeConnection PRIVATE USE_QML)
+        target_link_libraries(nodeConnection PUBLIC Qt6::Gui Qt6::Quick)
+        target_link_libraries(nodeConnection PUBLIC EstervDesigns::SimpleStyle
+            $<$<STREQUAL:$<TARGET_PROPERTY:EstervDesigns::SimpleStyle,TYPE>,STATIC_LIBRARY>:EstervDesigns::SimpleStyleplugin>
+                )
+            install(TARGETS ${out_targets_var}
+                    EXPORT ${PROJECT_NAME}-config
+                    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                    COMPONENT nodeConnection
+                    )
+                install(DIRECTORY ${CMAKE_BINARY_DIR}/Esterv/Iota/NodeConnection/
+                        DESTINATION ${CMAKE_INSTALL_LIBDIR}/Esterv/Iota
+                        COMPONENT nodeConnection
+                        )
+                install(TARGETS nodeConnectionplugin
+                        EXPORT ${PROJECT_NAME}-config
+                        DESTINATION ${CMAKE_INSTALL_LIBDIR}/Esterv/Iota/NodeConnection
+                        COMPONENT nodeConnection
+                        )
+
+endif(USE_QML)
+        target_link_libraries(nodeConnection PUBLIC IotaMqttClient::clientMQTT IotaClient::client )
+        target_link_libraries(nodeConnection PUBLIC Qt6::Core)
+ 	target_compile_definitions(nodeConnection PRIVATE WINDOWS_NCONN)
+        target_include_directories(nodeConnection PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Esterv/${PROJECT_NAME}>")
 
 
-	target_link_libraries(nodeConection PUBLIC MyDesigns qclient qclientMQTT
-		$<$<STREQUAL:$<TARGET_PROPERTY:MyDesigns,TYPE>,STATIC_LIBRARY>:MyDesignsplugin>
-		)
-
-	target_include_directories(nodeConection PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/nodeConection>")
-
-	install(DIRECTORY ${CMAKE_BINARY_DIR}/nodeConection/
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/QMLPlugins/nodeConection
-		)
-
-	install(TARGETS nodeConection nodeConectionplugin ${out_targets_var}
-		EXPORT nodeConectionTargets
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        install(TARGETS nodeConnection
+            EXPORT ${PROJECT_NAME}-config
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT nodeConnection
 		)
 	install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
-		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nodeConection
+                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Esterv/${PROJECT_NAME}
+                COMPONENT nodeConnection
 		)
 
-	install(EXPORT nodeConectionTargets
-		FILE nodeConectionTargets.cmake
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConection
-		)
-	include(CMakePackageConfigHelpers)
-
-	configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-		"${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfig.cmake"
-		INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConection
-		)
-	write_basic_package_version_file(
-		"${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfigVersion.cmake"
-		VERSION ${VERSION}
-		COMPATIBILITY SameMajorVersion
-		)
-	install(FILES
-		${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfig.cmake
-		${CMAKE_CURRENT_BINARY_DIR}/nodeConectionConfigVersion.cmake
-		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/nodeConection
-		)
-	export(EXPORT nodeConectionTargets
-		FILE "${CMAKE_CURRENT_BINARY_DIR}/nodeConectionTargets.cmake"
-		)
+            install(EXPORT ${PROJECT_NAME}-config
+                FILE ${PROJECT_NAME}-config.cmake
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Esterv
+                NAMESPACE ${PROJECT_NAME}::
+                COMPONENT ${PROJECT_NAME}
+            )
+            include(CMakePackageConfigHelpers)
+            configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+                    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+                    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Esterv
+                    )
+            write_basic_package_version_file(
+                    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+                    VERSION ${VERSION}
+                    COMPATIBILITY SameMajorVersion
+                    )
+            install(FILES
+                    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+                    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+                    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Esterv
+                    )
+            export(EXPORT ${PROJECT_NAME}-config
+                    FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+                    )
 
 	if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+            add_subdirectory(examples)
 		set(CPACK_PACKAGE_CONTACT "estervtech")
 		include(CTest)
 		set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-v${SEMVER}-${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_VERSION}-${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_CXX_COMPILER_ID}")

@@ -6,7 +6,13 @@ namespace qiota{
 NodeConnection * NodeConnection::m_instance=nullptr;
 NodeConnection* NodeConnection::instance()
 {
-    if (!m_instance) m_instance=new NodeConnection();
+    if (!m_instance)
+    {
+        m_instance=new NodeConnection();
+#if defined(USE_QML)
+        QJSEngine::setObjectOwnership(m_instance,QJSEngine::CppOwnership);
+#endif
+    }
     return m_instance;
 }
 NodeConnection::NodeConnection(QObject *parent)

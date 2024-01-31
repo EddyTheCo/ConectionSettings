@@ -40,13 +40,6 @@ FetchContent_MakeAvailable(IotaMqttClient)
 
 option(USE_QML "Create QML types and modules" ON)
 if(USE_QML)
-    FetchContent_Declare(
-            EstervDesigns
-            GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-            GIT_TAG v1.1.0
-            FIND_PACKAGE_ARGS 1.1 CONFIG
-        )
-    FetchContent_MakeAvailable(EstervDesigns)
     find_package(Qt6 COMPONENTS Core Gui Quick)
 else()
     find_package(Qt6 COMPONENTS Core)
@@ -73,9 +66,6 @@ if (Qt6_FOUND)
         add_library(${PROJECT_NAME}::nodeConnectionplugin ALIAS nodeConnectionplugin)
         target_compile_definitions(nodeConnection PRIVATE USE_QML)
         target_link_libraries(nodeConnection PUBLIC Qt6::Gui Qt6::Quick)
-        target_link_libraries(nodeConnection PUBLIC EstervDesigns::SimpleStyle
-            $<$<STREQUAL:$<TARGET_PROPERTY:EstervDesigns::SimpleStyle,TYPE>,STATIC_LIBRARY>:EstervDesigns::SimpleStyleplugin>
-                )
             install(TARGETS ${out_targets_var}
                     EXPORT ${PROJECT_NAME}-config
                     DESTINATION ${CMAKE_INSTALL_LIBDIR}

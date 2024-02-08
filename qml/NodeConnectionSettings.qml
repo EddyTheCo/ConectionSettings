@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Esterv.Iota.NodeConnection
-import Esterv.Styles.Simple
+
 
 
 Frame
@@ -39,7 +39,7 @@ Frame
                 radius: 16
                 Layout.alignment: Qt.AlignRight
                 ToolTip.text: (NodeConnection.state)?qsTr("Connected"):qsTr("Waiting for node")
-                ToolTip.visible: hovered
+                ToolTip.visible: control.hovered
             }
         }
         GridLayout

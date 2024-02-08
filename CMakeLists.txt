@@ -25,7 +25,7 @@ include(GNUInstallDirs)
 FetchContent_Declare(
         IotaClient
 	GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
-        GIT_TAG v0.3.1
+        GIT_TAG v0.3.2
 	FIND_PACKAGE_ARGS 0.3 CONFIG
 	)
 FetchContent_MakeAvailable(IotaClient)
@@ -33,20 +33,13 @@ FetchContent_MakeAvailable(IotaClient)
 FetchContent_Declare(
         IotaMqttClient
 	GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-        GIT_TAG v0.3.1
+        GIT_TAG v0.3.2
 	FIND_PACKAGE_ARGS 0.3 CONFIG
 	)
 FetchContent_MakeAvailable(IotaMqttClient)
 
 option(USE_QML "Create QML types and modules" ON)
 if(USE_QML)
-    FetchContent_Declare(
-            EstervDesigns
-            GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-            GIT_TAG v1.1.0
-            FIND_PACKAGE_ARGS 1.1 CONFIG
-        )
-    FetchContent_MakeAvailable(EstervDesigns)
     find_package(Qt6 COMPONENTS Core Gui Quick)
 else()
     find_package(Qt6 COMPONENTS Core)
@@ -73,9 +66,6 @@ if (Qt6_FOUND)
         add_library(${PROJECT_NAME}::nodeConnectionplugin ALIAS nodeConnectionplugin)
         target_compile_definitions(nodeConnection PRIVATE USE_QML)
         target_link_libraries(nodeConnection PUBLIC Qt6::Gui Qt6::Quick)
-        target_link_libraries(nodeConnection PUBLIC EstervDesigns::SimpleStyle
-            $<$<STREQUAL:$<TARGET_PROPERTY:EstervDesigns::SimpleStyle,TYPE>,STATIC_LIBRARY>:EstervDesigns::SimpleStyleplugin>
-                )
             install(TARGETS ${out_targets_var}
                     EXPORT ${PROJECT_NAME}-config
                     DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -110,15 +100,14 @@ endif(USE_QML)
 		)
 
             install(EXPORT ${PROJECT_NAME}-config
-                FILE ${PROJECT_NAME}-config.cmake
-                DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Esterv
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
                 NAMESPACE ${PROJECT_NAME}::
                 COMPONENT ${PROJECT_NAME}
             )
             include(CMakePackageConfigHelpers)
             configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
                     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-                    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Esterv
+                    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
                     )
             write_basic_package_version_file(
                     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
@@ -128,7 +117,7 @@ endif(USE_QML)
             install(FILES
                     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
                     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-                    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Esterv
+                    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
                     )
             export(EXPORT ${PROJECT_NAME}-config
                     FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"

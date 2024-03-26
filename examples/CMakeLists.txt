@@ -17,8 +17,8 @@ if(BUILD_EXAMPLES)
 			"/esterVtech.com/imports"
 			IMPORT_PATH ${CMAKE_BINARY_DIR}
 			)
-                target_link_libraries(${example} PRIVATE Qt::Gui Qt::Qml Qt::Quick IotaNodeConn::nodeConnection
-                $<$<STREQUAL:$<TARGET_PROPERTY:IotaNodeConn::nodeConnection,TYPE>,STATIC_LIBRARY>:IotaNodeConn::nodeConnectionplugin>
+                target_link_libraries(${example} PRIVATE Qt::Gui Qt::Qml Qt::Quick nodeConnection
+                $<$<STREQUAL:$<TARGET_PROPERTY:nodeConnection,TYPE>,STATIC_LIBRARY>:nodeConnectionplugin>
             )
 
 		set_target_properties(${example} PROPERTIES
@@ -27,7 +27,7 @@ if(BUILD_EXAMPLES)
 			)
 		install(TARGETS ${example}
 			BUNDLE  DESTINATION .
-			DESTINATION ${CMAKE_INSTALL_BINDIR}
+			RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 			LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 			)
 		if(QTDEPLOY)

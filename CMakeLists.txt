@@ -61,7 +61,7 @@ if (Qt6_FOUND)
 			"/esterVtech.com/imports"
 			OUTPUT_DIRECTORY
 			${CMAKE_BINARY_DIR}/Esterv/Iota/NodeConnection
-			IMPORT_PATH ${CMAKE_BINARY_DIR} ${CMAKE_INSTALL_LIBDIR}
+			IMPORT_PATH ${CMAKE_BINARY_DIR} 
 			)
 
 		add_library(${PROJECT_NAME}::nodeConnectionplugin ALIAS nodeConnectionplugin)

@@ -1,5 +1,7 @@
 # Esterv.Iota.NodeConnection 
 
+[TOC]
+
 This repo implements a singleton called `NodeConnection` that group methods to interact with the Event and REST API of Iota nodes.
 With one global object you can manage everything related to the connection to the nodes.
 The repo can produce a QML Module with types for configuring the settings to communicate with Iota nodes.
@@ -32,8 +34,8 @@ include(FetchContent)
 FetchContent_Declare(
 	IotaNodeConn	
 	GIT_REPOSITORY https://github.com/EddyTheCo/ConectionSettings.git
-	GIT_TAG main 
-	FIND_PACKAGE_ARGS 0.1 CONFIG  
+	GIT_TAG vMAJOR.MINOR.PATCH 
+	FIND_PACKAGE_ARGS MAJOR.MINOR CONFIG  
 	)
 FetchContent_MakeAvailable(IotaNodeConn)
 

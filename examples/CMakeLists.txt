@@ -4,7 +4,7 @@ if(BUILD_EXAMPLES)
 		find_package(EstervDesigns 0.4 REQUIRED COMPONENTS FlatControl CONFIG )
 	endif(EMSCRIPTEN OR ANDROID)
 
-        foreach(example "example1"
+	foreach(example "example1"
 			)
 		qt_add_executable(${example} ${example}.cpp )
 
@@ -17,9 +17,9 @@ if(BUILD_EXAMPLES)
 			"/esterVtech.com/imports"
 			IMPORT_PATH ${CMAKE_BINARY_DIR}
 			)
-                target_link_libraries(${example} PRIVATE Qt::Gui Qt::Qml Qt::Quick nodeConnection
-                $<$<STREQUAL:$<TARGET_PROPERTY:nodeConnection,TYPE>,STATIC_LIBRARY>:nodeConnectionplugin>
-            )
+		target_link_libraries(${example} PRIVATE Qt::Gui Qt::Qml Qt::Quick nodeConnection
+			$<$<STREQUAL:$<TARGET_PROPERTY:nodeConnection,TYPE>,STATIC_LIBRARY>:nodeConnectionplugin>
+			)
 
 		set_target_properties(${example} PROPERTIES
 			WIN32_EXECUTABLE ON
@@ -29,6 +29,7 @@ if(BUILD_EXAMPLES)
 			BUNDLE  DESTINATION .
 			RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 			LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+			COMPONENT examples
 			)
 		if(QTDEPLOY)
 			qt_generate_deploy_qml_app_script(
@@ -51,7 +52,7 @@ if(BUILD_EXAMPLES)
 			if(NOT android_openssl_POPULATED)
 				FetchContent_Populate(android_openssl)
 				include(${android_openssl_SOURCE_DIR}/android_openssl.cmake)
-                                add_android_openssl_libraries(${example})
+				add_android_openssl_libraries(${example})
 			endif(NOT android_openssl_POPULATED)
 
 		endif(ANDROID)

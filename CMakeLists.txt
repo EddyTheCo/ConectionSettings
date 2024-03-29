@@ -5,7 +5,7 @@ include(FetchContent)
 FetchContent_Declare(
 	ccommon
 	GIT_REPOSITORY https://github.com/EddyTheCo/Common.git
-	GIT_TAG use_IFW
+	GIT_TAG v0.3.0
 	)
 FetchContent_MakeAvailable(ccommon)
 version_from_git(
@@ -21,29 +21,29 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 include(GNUInstallDirs)
 
+if(USE_QML)
+	find_package(Qt6 COMPONENTS Core Gui Quick Qml)
+else()
+	find_package(Qt6 COMPONENTS Core)
+endif()
 
 FetchContent_Declare(
 	IotaClient
 	GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
-	GIT_TAG use_IFW
-	FIND_PACKAGE_ARGS 0.3 CONFIG
+	GIT_TAG v0.4.0
+	FIND_PACKAGE_ARGS 0.4 CONFIG
 	)
 FetchContent_MakeAvailable(IotaClient)
 
 FetchContent_Declare(
 	IotaMqttClient
 	GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-	GIT_TAG use_IFW
-	FIND_PACKAGE_ARGS 0.3 CONFIG
+	GIT_TAG v0.4.0
+	FIND_PACKAGE_ARGS 0.4 CONFIG
 	)
 FetchContent_MakeAvailable(IotaMqttClient)
 
 option(USE_QML "Create QML types and modules" ON)
-if(USE_QML)
-	find_package(Qt6 COMPONENTS Core Gui Quick)
-else()
-	find_package(Qt6 COMPONENTS Core)
-endif()
 
 if (Qt6_FOUND)
 	qt_standard_project_setup()

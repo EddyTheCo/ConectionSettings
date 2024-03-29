@@ -22,9 +22,9 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 include(GNUInstallDirs)
 
 if(USE_QML)
-	find_package(Qt6 COMPONENTS Core Gui Quick Qml)
+	find_package(Qt6 COMPONENTS Core Network Gui Quick Qml)
 else()
-	find_package(Qt6 COMPONENTS Core)
+	find_package(Qt6 COMPONENTS Core Network)
 endif()
 
 FetchContent_Declare(

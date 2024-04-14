@@ -6,7 +6,7 @@ include(FetchContent)
 FetchContent_Declare(
 	ccommon
 	GIT_REPOSITORY https://github.com/EddyTheCo/Common.git
-	GIT_TAG v0.3.0
+	GIT_TAG v0.3.1
 	)
 FetchContent_MakeAvailable(ccommon)
 version_from_git(
@@ -26,12 +26,12 @@ if(USE_QML)
 	find_package(Qt6 COMPONENTS Core Network Gui Quick Qml)
 else()
 	find_package(Qt6 COMPONENTS Core Network)
-endif()
+endif(USE_QML)
 
 FetchContent_Declare(
 	IotaClient
 	GIT_REPOSITORY https://github.com/EddyTheCo/Qclient-IOTA.git
-	GIT_TAG v0.4.0
+	GIT_TAG develop
 	FIND_PACKAGE_ARGS 0.4 CONFIG
 	)
 FetchContent_MakeAvailable(IotaClient)
@@ -39,7 +39,7 @@ FetchContent_MakeAvailable(IotaClient)
 FetchContent_Declare(
 	IotaMqttClient
 	GIT_REPOSITORY https://github.com/EddyTheCo/QclientMqtt-IOTA.git
-	GIT_TAG v0.4.0
+	GIT_TAG develop
 	FIND_PACKAGE_ARGS 0.4 CONFIG
 	)
 FetchContent_MakeAvailable(IotaMqttClient)
@@ -62,7 +62,7 @@ if (Qt6_FOUND)
 			"/esterVtech.com/imports"
 			OUTPUT_DIRECTORY
 			${CMAKE_BINARY_DIR}/Esterv/Iota/NodeConnection
-			IMPORT_PATH ${CMAKE_BINARY_DIR} 
+			IMPORT_PATH ${CMAKE_BINARY_DIR}
 			)
 
 		add_library(${PROJECT_NAME}::nodeConnectionplugin ALIAS nodeConnectionplugin)
@@ -72,6 +72,7 @@ if (Qt6_FOUND)
 			EXPORT ${PROJECT_NAME}-config
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}
 			COMPONENT nodeConnection
+			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT nodeConnection
 			)
 		install(DIRECTORY ${CMAKE_BINARY_DIR}/Esterv/Iota/NodeConnection/
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}/Esterv/Iota
@@ -81,6 +82,7 @@ if (Qt6_FOUND)
 			EXPORT ${PROJECT_NAME}-config
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}/Esterv/Iota/NodeConnection
 			COMPONENT nodeConnection
+			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT nodeConnection
 			)
 
 	endif(USE_QML)
@@ -95,6 +97,7 @@ if (Qt6_FOUND)
 		EXPORT ${PROJECT_NAME}-config
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		COMPONENT nodeConnection
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT nodeConnection
 		)
 	install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
 		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Esterv
@@ -112,5 +115,5 @@ endif(Qt6_FOUND)
 
 if(BUILD_DOCS)
 	build_docs()
-endif()
+endif(BUILD_DOCS)
 

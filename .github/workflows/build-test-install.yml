@@ -20,6 +20,7 @@ jobs:
       qtModules: 'qtwebsockets' 
       cmakeArgs: "-DUSE_THREADS=ON -DQTDEPLOY=ON -DBUILD_EXAMPLES=ON -DCPACK_PACKAGE_CONTACT=estervtech@gmail.com -DREPO_URL=https://eddytheco.github.io/ConectionSettings -DCPACK_PACKAGE_VENDOR=estervtech" 
       test: false
+      qmllint: true
   
   build_doxygen:
     if: startsWith(github.ref, 'refs/tags/v')

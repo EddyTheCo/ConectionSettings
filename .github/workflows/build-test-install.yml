@@ -9,6 +9,8 @@ on:
     branches: [develop]
 jobs:
   build_test_package:
+    permissions:
+      pull-requests: write
     strategy:
       matrix:
         os: [ubuntu-latest]

@@ -6,6 +6,7 @@ if(BUILD_EXAMPLES AND USE_QML)
 		GIT_TAG develop
 		FIND_PACKAGE_ARGS 1.1 COMPONENTS FlatControl SimpleStyle CustomControls CONFIG
 		)
+	FetchContent_MakeAvailable(EstervDesigns)
 	if(EMSCRIPTEN OR ANDROID)
 		find_package(Qt6 REQUIRED COMPONENTS QuickControls2)
 	endif(EMSCRIPTEN OR ANDROID)

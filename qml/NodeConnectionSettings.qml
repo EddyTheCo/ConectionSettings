@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Iota.NodeConnection
+import Esterv.Iota.NodeConnection
 
 
 Frame

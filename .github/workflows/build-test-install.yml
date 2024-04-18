@@ -19,7 +19,7 @@ jobs:
     with:
       os: ${{ matrix.os }}
       qtVersion: '6.6.0'
-      qtModules: 'qtwebsockets' 
+      qtModules: 'qtwebsockets qtshadertools'
       cmakeArgs: "-DUSE_THREADS=ON -DQTDEPLOY=ON -DBUILD_EXAMPLES=ON -DCPACK_PACKAGE_CONTACT=estervtech@gmail.com -DREPO_URL=https://eddytheco.github.io/ConectionSettings -DCPACK_PACKAGE_VENDOR=estervtech" 
       test: false
       qmllint: true

@@ -1,7 +1,6 @@
 @PACKAGE_INIT@
 include(CMakeFindDependencyMacro)
 find_dependency(Qt6 REQUIRED COMPONENTS Gui Quick )
-find_dependency(IotaClient 0.3 REQUIRED  CONFIG)
-find_dependency(IotaMqttClient 0.3 REQUIRED  CONFIG)
-find_dependency(EstervDesigns 1.1 REQUIRED  CONFIG)
+find_dependency(IotaClient 0.4 REQUIRED  CONFIG)
+find_dependency(IotaMqttClient 0.4 REQUIRED  CONFIG)
 include ( "${CMAKE_CURRENT_LIST_DIR}/IotaNodeConn-config.cmake" )

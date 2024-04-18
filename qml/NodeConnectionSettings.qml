@@ -4,7 +4,6 @@ import QtQuick.Controls
 import Esterv.Iota.NodeConnection
 
 
-
 Frame
 {
     id:control

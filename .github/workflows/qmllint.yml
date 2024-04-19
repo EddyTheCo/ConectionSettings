@@ -25,7 +25,12 @@ jobs:
     permissions:
       pull-requests: write
     steps:
+      - name: Read pr number 
+        id: getprn
+        run: echo "::set-output name=prn::$(cat pr_number)"
+
       - name: 'Run reviewer'
         uses: EddyTheCo/qmllint-action/@develop
         with:
           jsondir:  ${{ github.workspace }}
+          pr_number: ${{ steps.getprn.outputs.prn }}

@@ -1,5 +1,5 @@
 name: qmllintbot
-run-name: Linting QML for PR ${{ steps.getprn.outputs.prn }}
+run-name: Linting QML for PR 
 on:
 
   workflow_run:

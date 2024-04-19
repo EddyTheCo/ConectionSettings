@@ -1,5 +1,5 @@
 name: qmllintbot
-run-name: Linting QML for PR 
+run-name: Linting QML for PR
 on:
 
   workflow_run:
@@ -9,11 +9,11 @@ on:
 jobs:
   download:
     runs-on: ubuntu-latest
+    permissions:
+      actions:read
     steps:
       - name: 'Download artifact'
         uses: actions/download-artifact@v4
-        permissions:
-          actions:read
         with:
           name: qmllint
           github-token: ${{ secrets.GITHUB_TOKEN }}

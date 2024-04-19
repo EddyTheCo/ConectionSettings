@@ -1,5 +1,5 @@
 name: qmllintbot
-run-name: Linting QML for PR
+run-name: Linting QML for PR ${{ steps.getprn.outputs.prn }}
 on:
 
   workflow_run:
@@ -27,7 +27,9 @@ jobs:
     steps:
       - name: Read pr number 
         id: getprn
-        run: echo "::set-output name=prn::$(cat pr_number)"
+        run: |
+          cat pr_number
+          echo "prn=$(cat pr_number)" >> $GITHUB_OUTPUT
 
       - name: 'Run reviewer'
         uses: EddyTheCo/qmllint-action/@develop

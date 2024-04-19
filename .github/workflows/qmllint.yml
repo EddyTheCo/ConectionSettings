@@ -6,7 +6,6 @@ on:
     workflows: [push-build-release]
     types:
       - completed
-    branches: [develop]
 jobs:
   download:
     runs-on: ubuntu-latest

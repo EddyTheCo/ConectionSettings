@@ -1,4 +1,3 @@
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -7,32 +6,25 @@ import Esterv.Iota.NodeConnection
 import Esterv.CustomControls
 
 ApplicationWindow {
+    id: window
     visible: true
-    id:window
 
-    background:Rectangle
-    {
-        color:Style.backColor1
+    background: Rectangle {
+        color: Style.backColor1
     }
-    ColumnLayout
-    {
+    ColumnLayout {
         anchors.fill: parent
 
-        ThemeSwitch
-        {
-            id:themeswitch
+        ThemeSwitch {
+            id: themeswitch
         }
 
-        NodeConnectionSettings
-        {
+        NodeConnectionSettings {
             Layout.fillHeight: true
             Layout.fillWidth: true
             //defaultnodes:  ListModel {
-             //   ListElement { text: "https://3216aae.online-server.cloud/" }
+            //   ListElement { text: "https://3216aae.online-server.cloud/" }
             //}
         }
-
     }
-
-
 }

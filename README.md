@@ -43,7 +43,8 @@ target_link_libraries(<target> <PRIVATE|PUBLIC|INTERFACE> IotaNodeConn::nodeConn
 ```
 If want to use the QML module also add
 ```
-$<$<STREQUAL:$<TARGET_PROPERTY:IotaNodeConn::nodeConnection,TYPE>,STATIC_LIBRARY>:IotaNodeConn::nodeConnectionplugin>
+target_link_libraries(<target> <PRIVATE|PUBLIC|INTERFACE> $<$<STREQUAL:$<TARGET_PROPERTY:IotaNodeConn::nodeConnection,TYPE>,STATIC_LIBRARY>:IotaNodeConn::nodeConnectionplugin>)
+
 ```
 
 ## API reference

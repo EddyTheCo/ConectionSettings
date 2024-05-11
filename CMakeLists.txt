@@ -1,14 +1,18 @@
 cmake_minimum_required(VERSION 3.24)
 
 option(USE_QML "Create QML types and modules" ON)
+
 include(${CMAKE_CURRENT_BINARY_DIR}/local_conf.cmake OPTIONAL)
 include(FetchContent)
+
 FetchContent_Declare(
   ccommon
   GIT_REPOSITORY https://github.com/EddyTheCo/Common.git
-  GIT_TAG v0.3.1)
+  GIT_TAG v0.4.0)
 FetchContent_MakeAvailable(ccommon)
+
 version_from_git(LOG OFF TIMESTAMP "%Y%m%d%H%M%S")
+
 project(
   IotaNodeConn
   VERSION ${VERSION}
@@ -45,11 +49,14 @@ FetchContent_MakeAvailable(IotaMqttClient)
 option(USE_QML "Create QML types and modules" ON)
 
 if(Qt6_FOUND)
+
   qt_standard_project_setup()
+
   add_library(nodeConnection src/nodeConnection.cpp include/nodeConnection.hpp)
   set_target_properties(nodeConnection PROPERTIES VERSION ${VERSION}
                                                   SOVERSION ${VERSION_MAJOR})
   add_library(${PROJECT_NAME}::nodeConnection ALIAS nodeConnection)
+
   if(USE_QML)
     qt6_add_qml_module(
       nodeConnection
@@ -72,6 +79,7 @@ if(Qt6_FOUND)
                 nodeConnectionplugin)
     target_compile_definitions(nodeConnection PRIVATE USE_QML)
     target_link_libraries(nodeConnection PUBLIC Qt6::Gui Qt6::Quick)
+
     install(
       TARGETS ${out_targets_var}
       EXPORT ${PROJECT_NAME}-config
@@ -90,6 +98,7 @@ if(Qt6_FOUND)
       RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT nodeConnection)
 
   endif(USE_QML)
+
   target_link_libraries(nodeConnection PUBLIC IotaMqttClient::qclientMQTT
                                               IotaClient::qclient)
   target_link_libraries(nodeConnection PUBLIC Qt6::Core)
@@ -111,6 +120,7 @@ if(Qt6_FOUND)
     COMPONENT ${PROJECT_NAME})
 
   build_exports()
+
   if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     add_subdirectory(examples)
     build_cpack()

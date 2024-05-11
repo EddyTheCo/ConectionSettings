@@ -1,23 +1,21 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-
 #if defined(FORCE_STYLE)
 #include <QQuickStyle>
 #endif
 int main(int argc, char *argv[])
 {
-	QGuiApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
 #if defined(FORCE_STYLE)
-	QQuickStyle::setStyle(FORCE_STYLE);
+    QQuickStyle::setStyle(FORCE_STYLE);
 #endif
-	QQmlApplicationEngine engine;
-	engine.addImportPath("qrc:/esterVtech.com/imports");
-    const QUrl url=QUrl("qrc:/esterVtech.com/imports/Eexample1/qml/example1.qml");
+    QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:/esterVtech.com/imports");
+    const QUrl url = QUrl("qrc:/esterVtech.com/imports/Eexample1/qml/example1.qml");
 
-	engine.load(url);
+    engine.load(url);
 
-	return app.exec();
+    return app.exec();
 }
-
